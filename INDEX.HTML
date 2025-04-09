@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tokenizer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 1rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    pre {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 2rem;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Tokenizer</h2>
+    <textarea id="inputText" placeholder="Enter your text..."></textarea>
+    <br>
+    <button onclick="tokenize()">Tokenize</button>
+    <pre id="output"></pre>
+  </div>
+
+  <script>
+    function simulateTokenId(token) {
+      
+      let hash = 0;
+      for (let i = 0; i < token.length; i++) {
+        hash = (hash * 31 + token.charCodeAt(i)) % 100000;
+      }
+      return hash;
+    }
+
+    function tokenize() {
+      const text = document.getElementById('inputText').value;
+
+ 
+      const tokens = text.match(/\b\w+\'?\w*|\S/g) || [];
+      const characters = text.length;
+
+      
+      const tokenIds = tokens.map(t => simulateTokenId(t));
+
+    
+      const outputText = `
+Tokens
+${tokens.length}
+Characters
+${characters}
+Token ID
+[${tokenIds.join(', ')}]`.trim();
+
+      document.getElementById('output').textContent = outputText;
+    }
+  </script>
+</body>
+</html>
